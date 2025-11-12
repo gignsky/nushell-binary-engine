@@ -6,8 +6,6 @@
     systems.url = "github:nix-systems/default"; # Used for iterating over supported architectures
 
     # Dev tools
-    process-compose-flake.url = "github:Platonic-Systems/process-compose-flake/f6ce9481df9aec739e4e06b67492401a5bb4f0b1";
-
     git-hooks = {
       url = "github:cachix/git-hooks.nix";
       flake = false;
@@ -59,9 +57,8 @@
 
     in
 
-    # FIX: Access the 'lib' attribute by importing the nixpkgs function minimally,
-      # ensuring we get a package set (which contains lib) before calling genAttrs.
-    (import nixpkgs { }).lib.genAttrs supportedSystems (
+    # FIX: Access the 'lib' attribute directly from the nixpkgs input (pure method)
+    nixpkgs.lib.genAttrs supportedSystems (
       system:
       let
         # 1. Initialize nixpkgs for the current system (This one correctly calls the function)
