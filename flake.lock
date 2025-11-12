@@ -32,27 +32,10 @@
         "type": "github"
       }
     },
-    "process-compose-flake": {
-      "locked": {
-        "lastModified": 1724606023,
-        "narHash": "sha256-rdGeNa/lCS8E1lXzPqgl+vZUUvnbEZT11Bqkx5jfYug=",
-        "owner": "Platonic-Systems",
-        "repo": "process-compose-flake",
-        "rev": "f6ce9481df9aec739e4e06b67492401a5bb4f0b1",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Platonic-Systems",
-        "repo": "process-compose-flake",
-        "rev": "f6ce9481df9aec739e4e06b67492401a5bb4f0b1",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "git-hooks": "git-hooks",
         "nixpkgs": "nixpkgs",
-        "process-compose-flake": "process-compose-flake",
         "systems": "systems"
       }
     },
