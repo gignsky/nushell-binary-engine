@@ -50,8 +50,6 @@ repository, it invokes this function, passing two critical components:
 
 The function accepts the following, well-defined arguments:
 
-|
-
 | Argument                       | Type      | Description                                                                                      |
 | :----------------------------- | :-------- | :----------------------------------------------------------------------------------------------- |
 | The script: `scriptName`       | `String`  | The desired name of the final executable (e.g., `"quick-results"`).                              |
