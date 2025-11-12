@@ -1,6 +1,6 @@
 { pkgs
-, inputs
-, mkEmbeddedScript
+, # , inputs
+  mkEmbeddedScript
 , ...
 }:
 {
@@ -20,7 +20,7 @@
       rustfmt
       clippy
       bacon
-      inputs.cargo-doc-live.packages.${pkgs.system}.default
+      # inputs.cargo-doc-live.packages.${pkgs.system}.default
 
       # utilities
       gitflow
