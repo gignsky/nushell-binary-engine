@@ -3,7 +3,7 @@ authors = ["Maxwell Rupp <gignsky@gignsky.com>"]
 edition = "2021"
 # If you change the name here, you must also do it in flake.nix (and run `cargo generate-lockfile` afterwards)
 name = "nushell-binary-engine"
-description = "A simple Rust project using Nix"
+description = "A wrapper engine to allow for downstream nushell scripts to be packaged as binaries while still using rust under the hood as well"
 version = "0.0.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
