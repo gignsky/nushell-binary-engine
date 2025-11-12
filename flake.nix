@@ -48,63 +48,65 @@
               allModules;
         in
         map (fn: ./nix/modules/${fn}) filteredModules;
-      #
-      # # ⚜️ Integration of the Core Engine Logic via perSystem ⚜️
-      # # This block defines the reusable library function and a default test application.
-      # perSystem = { config, pkgs, ... }:
-      #   let
-      #     # ⚜️ The Core Engine Function ⚜️
-      #     # This function accepts the desired binary name and the script content as a string.
-      #     mkEmbeddedScript = { scriptName, scriptContent }:
-      #       pkgs.rustPlatform.buildRustPackage rec {
-      #         pname = scriptName;
-      #         version = "0.1.0";
-      #
-      #         # The source directory containing Cargo.toml and src/
-      #         src = ./.;
-      #
-      #         # The CRITICAL step: Inject the script content into the Rust binary
-      #         # at compile time via an environment variable.
-      #         RUSTC_ENV = {
-      #           NU_SCRIPT_CONTENT = scriptContent;
-      #         };
-      #
-      #         # Standard build settings
-      #         RUSTFLAGS = [ "-C target-feature=+crt-static" ];
-      #         cargoBuildFlags = [ "--release" ];
-      #         nativeBuildInputs = with pkgs; [ pkgs.pkg-config ];
-      #         buildInputs = with pkgs; [ pkgs.openssl.dev ];
-      #
-      #         meta = with pkgs.lib; {
-      #           description = "A self-contained binary running an embedded Nushell script: ${scriptName}.";
-      #           homepage = "https://example.com";
-      #           license = licenses.mit;
-      #         };
-      #       };
-      #   in
-      #   {
-      #     # 1. Export the build function in the 'lib' attribute for easy access by other flakes
-      #     lib = {
-      #       inherit mkEmbeddedScript;
-      #     };
-      #
-      #     # 2. Provide a default example package for testing the engine repo itself
-      #     packages.example = mkEmbeddedScript {
-      #       scriptName = "engine-test-binary";
-      #       # A simple test script (note the use of '' for multiline Nix strings)
-      #       scriptContent = ''
-      #         # The embedded Nushell code to verify engine functionality
-      #         let result = 100 | math sqrt;
-      #         print $"Engine Test Successful! Result of sqrt(100) is: ($result)";
-      #       '';
-      #     };
-      #
-      #     # 3. Define a simple command to run the package
-      #     apps.default = {
-      #       type = "app";
-      #       # Reference the package via the flake-parts config
-      #       program = "${config.packages.example}/bin/engine-test-binary";
-      #     };
-      #   };
+
+      # ⚜️ Integration of the Core Engine Logic via perSystem ⚜️
+      # This block defines the reusable library function and a default test application.
+      perSystem =
+        { config, pkgs, ... }:
+        let
+          # ⚜️ The Core Engine Function ⚜️
+          # This function accepts the desired binary name and the script content as a string.
+          mkEmbeddedScript =
+            { scriptName, scriptContent }:
+            pkgs.rustPlatform.buildRustPackage rec {
+              pname = scriptName;
+              version = "0.1.0";
+
+              # The source directory containing Cargo.toml and src/
+              src = ./.;
+
+              # The CRITICAL step: Inject the script content into the Rust binary
+              # at compile time via an environment variable.
+              RUSTC_ENV = {
+                NU_SCRIPT_CONTENT = scriptContent;
+              };
+
+              # Standard build settings
+              RUSTFLAGS = [ "-C target-feature=+crt-static" ];
+              cargoBuildFlags = [ "--release" ];
+              nativeBuildInputs = with pkgs; [ pkg-config ];
+              buildInputs = with pkgs; [ openssl.dev ];
+
+              meta = with pkgs.lib; {
+                description = "A self-contained binary running an embedded Nushell script: ${scriptName}.";
+                homepage = "https://example.com";
+                license = licenses.mit;
+              };
+            };
+        in
+        {
+          # 1. Export the build function in the 'lib' attribute for easy access by other flakes
+          lib = {
+            inherit mkEmbeddedScript;
+          };
+
+          # 2. Provide a default example package for testing the engine repo itself
+          packages.example = mkEmbeddedScript {
+            scriptName = "engine-test-binary";
+            # A simple test script (note the use of '' for multiline Nix strings)
+            scriptContent = ''
+              # The embedded Nushell code to verify engine functionality
+              let result = 100 | math sqrt;
+              print $"Engine Test Successful! Result of sqrt(100) is: ($result)";
+            '';
+          };
+
+          # 3. Define a simple command to run the package
+          apps.default = {
+            type = "app";
+            # Reference the package via the flake-parts config
+            program = "${config.packages.example}/bin/engine-test-binary";
+          };
+        };
     };
 }
