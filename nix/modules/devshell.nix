@@ -1,7 +1,7 @@
 { pkgs
 , # , inputs
-  mkEmbeddedScript
-, ...
+  # mkEmbeddedScript,
+  ...
 }:
 {
   default = pkgs.mkShell {
@@ -27,14 +27,14 @@
       cowsay
       lolcat
 
-      # Example: Including the default package in the shell
-      mkEmbeddedScript
-      {
-        scriptName = "engine-test-binary";
-        scriptContent = ''
-          print "Shell is active."
-        '';
-      }
+      # # Example: Including the default package in the shell
+      # mkEmbeddedScript
+      # {
+      #   scriptName = "engine-test-binary";
+      #   scriptContent = ''
+      #     print "Shell is active."
+      #   '';
+      # }
     ];
 
     shellHook = ''
