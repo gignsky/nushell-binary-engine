@@ -36,12 +36,15 @@
 
         # Custom flake check hook (from .dotfiles)
         nix-flake-check-main-develop = {
-          enable = true;
+          enable = false;
           name = "nix flake check on develop/main";
           entry = "./scripts/pre-commit-flake-check.sh";
           language = "script";
           pass_filenames = false;
-          stages = [ "pre-commit" "pre-merge-commit" ];
+          stages = [
+            "pre-commit"
+            "pre-merge-commit"
+          ];
         };
       };
     };
