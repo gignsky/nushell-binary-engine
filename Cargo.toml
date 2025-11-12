@@ -1,0 +1,23 @@
+[package]
+authors = ["Maxwell Rupp <gignsky@gignsky.com>"]
+edition = "2021"
+# If you change the name here, you must also do it in flake.nix (and run `cargo generate-lockfile` afterwards)
+name = "nushell-binary-engine"
+description = "A simple Rust project using Nix"
+version = "0.0.0"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+# Essential crates for embedding the Nushell interpreter
+nu-engine = "0.98.0"
+nu-protocol = "0.98.0"
+
+# Nushell is asynchronous, requiring an async runtime
+tokio = { version = "1", features = ["full"] }
+
+# A crate for embedding the script text within the binary
+include_dir = { version = "0.7", features = ["glob"] }
+
+# Optional: For better error handling
+anyhow = "1.0"
