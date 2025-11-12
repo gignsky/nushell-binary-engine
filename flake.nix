@@ -22,7 +22,6 @@
     , ...
     }@inputs:
     let
-      # FIX: Removed the incorrect 'pkgs = import nixpkgs;' definition here.
       supportedSystems = import systems;
 
       # The Core Engine Function (takes pkgs set, returns the builder function)
@@ -57,7 +56,6 @@
 
     in
 
-    # FIX: Access the 'lib' attribute directly from the nixpkgs input (pure method)
     nixpkgs.lib.genAttrs supportedSystems (
       system:
       let
@@ -72,7 +70,6 @@
           inherit inputs pkgs;
           buildEngineBinary = mkFinalEngineBinary;
         };
-        # NOTE: pre-commit.nix returns the hooks attribute set directly.
         preCommitHooks = pkgs.callPackage ./nix/modules/pre-commit.nix {
           inherit inputs pkgs;
         };
