@@ -39,8 +39,6 @@ repository, it invokes this function, passing two critical components:
    Rust, C++, etc.) whose **absolute Nix store paths** are injected into the
    final executable's environment variables.
 
-|
-
 | Component                   | Responsibility                                       | Delivery Method                                   |
 | :-------------------------- | :--------------------------------------------------- | :------------------------------------------------ |
 | Rust Kernel (`src/main.rs`) | Provides the generic interpreter and execution loop. | Consumed via `src = ./.;`                         |
